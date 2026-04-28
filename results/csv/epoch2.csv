@@ -1,0 +1,4 @@
+Centre,Baseline Acc,Augmented Acc,Baseline Drop,Augmented Drop
+centre_A,0.98,0.914,0.0,0.0
+centre_B,0.744,0.608,0.236,0.30600000000000005
+centre_C,0.618,0.652,0.362,0.262
