@@ -45,7 +45,50 @@ PolypGen-DG/
 ## About the project
 This project investigates **domain generalisation** for polyp detection using the **PolypGen Dataset** (C1-C3 sites).
 
-## About the dataset
+## Dataset Setup
+This project repository does not include the dataset due to size constraints. Please refer to [Dataset Acknowledgement](#dataset-acknowledgement) for the full dataset (C1-C6).
+
+Download the dataset used specifically in this project from:
+```https://drive.google.com/drive/folders/1-6lIPZ7VQ93dzt-9ieszybwhO3DEU5Jh?usp=drive_link```
+
+
+## Running the project
+### Install requirements
+```bash
+pip install -r requirements.txt
+```
+### Training model
+```bash
+python main.py
+```
+
+### Results
+Results will be saved in:
+```bash
+results/csv/
+results/figures/
+```
+
+### Create `.gitignore`
+```gitignore
+# datasets
+data/
+*.zip
+
+# outputs
+results/
+*.png
+*.csv
+
+# model weights
+*.pth
+
+# python cache
+__pycache__/
+*.pyc
+```
+
+## Dataset Acknowledgement
 - PolypGen dataset DOI: 10.7303/syn26376615  
 - Download link: https://www.synapse.org/#!Synapse:syn45200214  
 - Citation (mandatory if used):
@@ -53,3 +96,4 @@ This project investigates **domain generalisation** for polyp detection using th
 1. Ali, S., Jha, D., Ghatwary, N. et al. Sci Data 10, 75 (2023).  
 2. Ali, S., Ghatwary, N., Jha, D. et al. Sci Rep 14, 2032 (2024).  
 3. Ali S, Dmitrieva M, Ghatwary N, Bano S, Polat G, et al. Med Image Anal, 2021.
+
