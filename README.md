@@ -1,6 +1,7 @@
 # Cross-Site Domain Generalisation Study using PolypGen Dataset
 
 ## Folder Structure
+```
 PolypGen-DG/
 ├── requirements.txt
 ├── .gitignore
@@ -39,6 +40,7 @@ PolypGen-DG/
 ├── model.py
 ├── main.py
 └── analyse_results.py
+```
 
 ## About the project
 This project investigates **domain generalisation** for polyp detection using the **PolypGen Dataset** (C1-C3 sites).
