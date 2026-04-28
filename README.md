@@ -53,39 +53,30 @@ Download the dataset used specifically in this project from:
 
 
 ## Running the project
-### Install requirements
+### 1. Install requirements
 ```bash
 pip install -r requirements.txt
 ```
-### Training model
+### 2. Training model
 ```bash
 python main.py
 ```
 
-### Results
+### 3. Results
 Results will be saved in:
 ```bash
 results/csv/
 results/figures/
 ```
 
-### Create `.gitignore`
-```gitignore
-# datasets
+### 4. Create `.gitignore`
+```bash
 data/
-*.zip
-
-# outputs
 results/
-*.png
 *.csv
-
-# model weights
+*.png
 *.pth
-
-# python cache
 __pycache__/
-*.pyc
 ```
 
 ## Dataset Acknowledgement
