@@ -69,7 +69,7 @@ results/csv/
 results/figures/
 ```
 
-### 4. Create `.gitignore`
+### 4. Create **.gitignore**
 ```bash
 data/
 results/
