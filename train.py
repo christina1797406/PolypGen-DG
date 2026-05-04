@@ -1,19 +1,23 @@
 import torch
 import torch.nn as nn
 from sklearn.metrics import accuracy_score, confusion_matrix
+from torch.utils.tensorboard import SummaryWriter
 device = torch.device("cpu")
 
-def train(model, loader, epochs=5, lr=1e-3):
+def train(model, train_loader, val_loader, epochs=5, lr=1e-3, run_name="experiment"):
     model.to(device)
-    model.train()
 
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.fc.parameters(), lr=lr)
+    writer = SummaryWriter(log_dir=f"runs/{run_name}")
 
     for epoch in range(epochs):
         total_loss = 0
+        model.train()
+        correct = 0
+        total = 0
 
-        for images, labels in loader:
+        for images, labels in train_loader:
             images = images.to(device)
             labels = labels.long().to(device)
 
@@ -26,7 +30,46 @@ def train(model, loader, epochs=5, lr=1e-3):
 
             total_loss += loss.item()
 
-        print(f"Epoch {epoch+1} | Loss: {total_loss:.4f}")
+            preds = torch.argmax(outputs, dim=1)
+            correct += (preds == labels).sum().item()
+            total += labels.size(0)
+        
+        train_loss = total_loss / len(train_loader)
+        train_acc = correct / total
+
+        # Validation
+        model.eval()
+        val_correct = 0
+        val_total = 0
+        val_loss = 0
+
+        with torch.no_grad():
+            for images, labels in val_loader:
+                images = images.to(device)
+                labels = labels.long().to(device)
+
+                outputs = model(images)
+                loss = criterion(outputs, labels)
+                val_loss += loss.item()
+
+                preds = torch.argmax(outputs, dim=1)
+                val_correct += (preds == labels).sum().item()
+                val_total += labels.size(0)
+
+        val_loss /= len(val_loader)
+        val_acc = val_correct / val_total
+
+        writer.add_scalar("Loss/Train", train_loss, epoch)
+        writer.add_scalar("Loss/Validation", val_loss, epoch)
+        writer.add_scalar("Accuracy/Train", train_acc, epoch)
+        writer.add_scalar("Accuracy/Validation", val_acc, epoch)
+
+
+        print(f"Epoch {epoch+1}")
+        print(f"  Train Loss: {train_loss:.4f} | Train Accuracy: {train_acc:.4f}")
+        print(f"  Validation Loss: {val_loss:.4f} | Validation Accuracy: {val_acc:.4f}")
+
+    writer.close()
 
 def evaluate(model, loader):
     model.eval()

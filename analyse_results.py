@@ -67,7 +67,7 @@ def plot_acc(df, title, save_path):
     centres = ["A", "B", "C"]
     x = range(len(centres))
 
-    plt.figure(figsize=(8, 5))
+    plt.figure(figsize=(8, 5), dpi=300)
     baseline_colour = "#2D6CDF"
     augmented_colour = "#E9A93F"
 
@@ -75,6 +75,7 @@ def plot_acc(df, title, save_path):
     plt.bar([i + 0.4 for i in x], df["Augmented Acc"], width=0.4, label="Augmented", color=augmented_colour)
 
     plt.xticks([i + 0.2 for i in x], centres)
+    plt.xlabel("Test Site")
     plt.ylabel("Accuracy")
     plt.ylim(0, 1.10)
     plt.title(title, fontsize=13, weight="bold")
@@ -85,11 +86,11 @@ def plot_acc(df, title, save_path):
     # Value labels
     for i, v in enumerate(df["Baseline Acc"]):
         if pd.notna(v):
-            plt.text(i, v, f"{v:.2f}", ha="center", va="bottom")
+            plt.text(i, v, f"{v:.3f}", ha="center", va="bottom")
     
     for i, v in enumerate(df["Augmented Acc"]):
         if pd.notna(v):
-            plt.text(i + 0.4, v, f"{v:.2f}", ha="center", va="bottom")
+            plt.text(i + 0.4, v, f"{v:.3f}", ha="center", va="bottom")
     
     plt.legend()
     plt.savefig(save_path)
@@ -103,7 +104,7 @@ def plot_drop(df, save_path, title):
 
     x = range(len(centres))
 
-    plt.figure(figsize=(8, 5))
+    plt.figure(figsize=(8, 5), dpi=300)
     baseline_colour = "#2D6CDF"
     augmented_colour = "#E9A93F"
 
@@ -111,7 +112,8 @@ def plot_drop(df, save_path, title):
     plt.bar([i + 0.4 for i in x], augmented_drops, width=0.4, label="Augmented", color=augmented_colour)
 
     plt.xticks([i + 0.2 for i in x], centres)
-    plt.ylabel("Performance Drop from Centre A")
+    plt.xlabel("Test Site")
+    plt.ylabel("Performance Drop")
     plt.title(title, fontsize=13, weight="bold")
 
     plt.gca().spines['top'].set_visible(False)
@@ -120,11 +122,11 @@ def plot_drop(df, save_path, title):
     # Value labels
     for i, v in enumerate(baseline_drops):
         if pd.notna(v):
-            plt.text(i, v, f"{v:.2f}", ha="center", va="bottom")
+            plt.text(i, v, f"{v:.3f}", ha="center", va="bottom")
 
     for i, v in enumerate(augmented_drops):
         if pd.notna(v):
-            plt.text(i + 0.4, v, f"{v:.2f}", ha="center", va="bottom")
+            plt.text(i + 0.4, v, f"{v:.3f}", ha="center", va="bottom")
 
     plt.legend()
     plt.savefig(save_path)
@@ -159,12 +161,12 @@ if __name__ == "__main__":
         # Save figures
         plot_acc(
             df,
-            title=f"Cross-Centre Accuracy Comparison - {name}",
+            title=f"Cross-Site Accuracy Comparison - {name}",
             save_path=os.path.join(figure_dir, f"{name}_acc.png")
         )
         plot_drop(
             df,
-            title=f"Performance Drop from Source Domain (Centre A) - {name}",
+            title=f"Performance Drop from Source Domain (Site A) - {name}",
             save_path=os.path.join(figure_dir, f"{name}_drop.png")
         )
 

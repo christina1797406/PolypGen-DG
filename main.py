@@ -9,7 +9,7 @@ from train import train, evaluate
 DATA_ROOT = "data"
 CENTRES = ["centre_A", "centre_B", "centre_C"]
 BATCH_SIZE = 32
-EPOCHS = 10
+EPOCHS = 50
 
 base_transform = transforms.Compose([
     transforms.Resize((224, 224)),
@@ -38,8 +38,13 @@ def run_experiment(transform, label):
         shuffle=True
     )
 
+    val_loader = DataLoader(
+        Subset(dataset, train_idx),
+        batch_size=BATCH_SIZE
+    )
+
     model = get_model()
-    train(model, train_loader, epochs=EPOCHS)
+    train(model, train_loader, val_loader, epochs=EPOCHS, run_name=label.replace(" ", "_").lower())
 
     results = {}
 
